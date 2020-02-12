@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.ArticleController">
+   <children>
+      <Pane fx:id="pane_acceuil" layoutX="320.0" layoutY="20.0" prefHeight="600.0" prefWidth="909.0" style="-fx-background-color: #012;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="0.0" />
+      <Pane fx:id="pane_locaux" layoutX="335.0" layoutY="12.0" prefHeight="600.0" prefWidth="909.0" style="-fx-Background-color: #012;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane prefHeight="381.0" prefWidth="909.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="346.0" minHeight="6.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="346.0" minHeight="10.0" prefHeight="331.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <TableView fx:id="tableLocal" onMouseClicked="#tableLocalOnMouseClicked" onSort="#getNonReservedLocal" prefHeight="321.0" prefWidth="807.0">
+                           <columns>
+                              <TableColumn fx:id="colNom" editable="false" prefWidth="138.0" style="-fx-Background-color: teal;" text="Nom" />
+                              <TableColumn fx:id="colDispo" editable="false" prefWidth="138.0" style="-fx-Background-color: teal;" text="Disponibilité" />
+                              <TableColumn fx:id="colDateL" editable="false" prefWidth="112.0" style="-fx-Background-color: teal;" text="Date réservation" />
+                              <TableColumn fx:id="colDateS" editable="false" prefWidth="112.0" style="-fx-Background-color: teal;" text="Date Liberation" />
+                              <TableColumn fx:id="colDuree" editable="false" prefWidth="112.0" style="-fx-Background-color: teal;" text="Durée (j)" />
+                              <TableColumn fx:id="colAdresse" editable="false" prefWidth="191.0" style="-fx-Background-color: teal;" text="Adresse" />
+                           </columns>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TableView>
+                        <AnchorPane prefHeight="321.0" prefWidth="98.0">
+                           <children>
+                              <Button fx:id="btSupprimer" layoutX="10.0" layoutY="136.0" mnemonicParsing="false" onAction="#btSupprimerOnClick" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: teal;" text="Supprimer" textFill="WHITE" />
+                              <Button fx:id="btAjouter" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" onAction="#onActionAjouter" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: teal;" text="Ajouter" textFill="WHITE" />
+                              <Button fx:id="btModifier" layoutX="10.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: teal;" text="Modifier" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="63.0" prefWidth="909.0">
+                     <children>
+                        <Pane prefHeight="40.0" prefWidth="3.0" />
+                        <RadioButton fx:id="rbTous" mnemonicParsing="false" onAction="#getAllLocal" selected="true" text="Tous" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="consulterTypeGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <Pane prefHeight="40.0" prefWidth="7.0" />
+                        <RadioButton fx:id="rbConfirmes" mnemonicParsing="false" onAction="#getReservedLocal" text="Réservés" textFill="WHITE" toggleGroup="$consulterTypeGroup" />
+                        <Pane prefHeight="40.0" prefWidth="5.0" />
+                        <RadioButton fx:id="rbNonConfirmes" mnemonicParsing="false" onAction="#getNonReservedLocal" text="Non réservés" textFill="WHITE" toggleGroup="$consulterTypeGroup" />
+                        <Pane prefHeight="40.0" prefWidth="32.0" />
+                        <Pane prefHeight="40.0" prefWidth="15.0" />
+                        <TextField fx:id="tfRechecher" onKeyReleased="#tfRechecherOnKeyReleased" prefHeight="25.0" prefWidth="490.0" promptText="Rechercher" />
+                        <Pane prefHeight="40.0" prefWidth="87.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+            <VBox fx:id="vboxFormulaireLocal" layoutX="25.0" layoutY="373.0" prefHeight="200.0" prefWidth="233.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="tfnomLocal" promptText="nom " />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <CheckBox fx:id="ckReserver" mnemonicParsing="false" selected="true" text="Réserver" textFill="WHITE" />
+                     </children></HBox>
+                
+                  <TextField fx:id="tfDureeLocal" />
+                  <TextField fx:id="tfAdresseLocal" />
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </Pane>
+      <Pane fx:id="pane_matriel" layoutX="320.0" layoutY="20.0" prefHeight="600.0" prefWidth="909.0" style="-fx-background-color: #012;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane prefHeight="381.0" prefWidth="909.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="346.0" minHeight="6.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="346.0" minHeight="10.0" prefHeight="331.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <TableView fx:id="tableMatriel" prefHeight="321.0" prefWidth="390.0">
+                           <columns>
+                              <TableColumn fx:id="colNom1" editable="false" prefWidth="138.0" style="-fx-Background-color: teal;" text="Nom" />
+                              <TableColumn fx:id="colDisp1" editable="false" prefWidth="138.0" style="-fx-Background-color: teal;" text="Disponibilité" />
+                              <TableColumn fx:id="colType1" editable="false" prefWidth="112.0" style="-fx-Background-color: teal;" text="Type" />
+                           </columns>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TableView>
+                        <AnchorPane prefHeight="321.0" prefWidth="98.0">
+                           <children>
+                              <Button fx:id="btSupprimer1" layoutX="10.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: teal;" text="Supprimer" textFill="WHITE" />
+                              <Button fx:id="btAjouter1" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: teal;" text="Ajouter" textFill="WHITE" />
+                              <Button fx:id="btModifier1" layoutX="10.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: teal;" text="Modifier" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="63.0" prefWidth="909.0">
+                     <children>
+                        <Pane prefHeight="40.0" prefWidth="3.0" />
+                        <RadioButton fx:id="rbTous1" mnemonicParsing="false" selected="true" text="Tous" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="consulterTypeGroup1" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <Pane prefHeight="40.0" prefWidth="7.0" />
+                        <RadioButton fx:id="rbConfirmes1" mnemonicParsing="false" text="Réservés" textFill="WHITE" toggleGroup="$consulterTypeGroup1" />
+                        <Pane prefHeight="40.0" prefWidth="5.0" />
+                        <RadioButton fx:id="rbNonConfirmes1" mnemonicParsing="false" text="Non réservés" textFill="WHITE" toggleGroup="$consulterTypeGroup1" />
+                        <Pane prefHeight="40.0" prefWidth="32.0" />
+                        <Pane prefHeight="40.0" prefWidth="15.0" />
+                        <TextField fx:id="tfRechecher1" prefHeight="25.0" prefWidth="490.0" promptText="Rechercher" />
+                        <Pane prefHeight="40.0" prefWidth="87.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </children></Pane>
+      <Pane fx:id="pane_calendrier" layoutX="310.0" layoutY="10.0" prefHeight="600.0" prefWidth="909.0" style="-fx-background-color: #000025;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="acceil articles" />
+         </children></Pane>
+      <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #7C8184;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets left="200.0" />
+         </padding>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+      <HBox alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #7C8184;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ViewsImages/esoft%20logob.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <VBox layoutX="-13.0" layoutY="-13.0" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #7C8184;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="166.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ViewsImages/logoHuntKingdomCrop.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
+            <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" prefWidth="300.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../ViewsImages/cartBrown.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btn_Local" mnemonicParsing="false" onAction="#navMenuAction" prefWidth="300.0" style="-fx-background-color: teal; -fx-background-radius: 2em;" text="Store" textFill="#825e06" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="85.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" prefWidth="300.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../ViewsImages/calendarBrown.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btn_matriel" mnemonicParsing="false" onAction="#navMenuAction" prefWidth="300.0" style="-fx-background-color: teal; -fx-background-radius: 2em;" text="Evenements" textFill="#825e06" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" prefWidth="300.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../ViewsImages/articlesBrown.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btn_calendrier" mnemonicParsing="false" onAction="#navMenuAction" prefWidth="300.0" style="-fx-background-color: teal; -fx-background-radius: 2em;" text="Articles" textFill="#825e06" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" prefWidth="300.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../ViewsImages/ForumBrown.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btn_calendrier1" mnemonicParsing="false" onAction="#navMenuAction" prefWidth="300.0" style="-fx-background-color: teal; -fx-background-radius: 2em;" text="Forum" textFill="#825e06" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" prefWidth="300.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../ViewsImages/galleryBrown.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btn_calendrier11" mnemonicParsing="false" onAction="#navMenuAction" prefWidth="300.0" style="-fx-background-color: teal; -fx-background-radius: 2em;" text="Gallerie" textFill="#825e06" />
+               </children>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </VBox>
+   </children>
+</AnchorPane>
