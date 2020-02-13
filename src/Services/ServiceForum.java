@@ -5,15 +5,18 @@
  */
 package Services;
 
-import Entity.PublicationForum;
+import Entities.PublicationForum;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;  
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -54,24 +57,30 @@ public class ServiceForum {
             Logger.getLogger(ServiceForum.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public  void updateArticle(PublicationForum u)
+     public  void updatePublication(PublicationForum u, int id)
     {
+             PreparedStatement pt;
+
         try {
-         Statement st =cn.createStatement();
-            String req="UPDATE  article set id_user='"+u.getId_user()+"',titre='"+u.getTitre()+"',contenu='"+u.getContenu()+"',theme='"+u.getTheme()+"',Posted_in='"+u.getPosted_in()+"'WHERE id_pb ='"+u.getId_pb()+"'";
-            st.executeUpdate(req);
+             pt = cn.prepareStatement ("UPDATE  publication set titre=?,contenu=?,theme=? WHERE id_pb =?");
+                  pt.setString(1,u.getTitre());
+                  pt.setString(2,u.getContenu());
+                  pt.setString(3,u.getTheme());
+                  pt.setInt(4,id);
+                 
+            pt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceForum.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
      
-      public  ObservableList<PublicationForum> getallpublication(){
-          ObservableList<PublicationForum> publication = FXCollections.observableArrayList();
+      public  List<PublicationForum> getallpublication(){
+          List<PublicationForum> publication = new ArrayList<PublicationForum>();
           
           try {
          Statement st =cn.createStatement();
-            String req="select * from  article";
+            String req="select * from  publication";
             ResultSet result =st.executeQuery(req);
             result.beforeFirst();
             
@@ -96,12 +105,12 @@ public class ServiceForum {
       }
      
       
-       public  ObservableList<PublicationForum> search(String name){
-          ObservableList<PublicationForum> articles = FXCollections.observableArrayList();
+       public    List<PublicationForum> search(String name){
+          List<PublicationForum> publication = new ArrayList<PublicationForum>();
           
           try {
          Statement st =cn.createStatement();
-            String req="select * from  article where Title like '%"+name+"%' ";
+            String req="select * from  publication where titre like '%"+name+"%' ";
             ResultSet result =st.executeQuery(req);
             result.beforeFirst();
             
@@ -114,7 +123,7 @@ public class ServiceForum {
                   u.setTheme(result.getString(5));
                   u.setPosted_in(result.getTimestamp(6));
                   
-                  articles.add(u);
+                  publication.add(u);
                   System.out.println(u);
                   
               }
@@ -122,7 +131,7 @@ public class ServiceForum {
             Logger.getLogger(ServiceForum.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-          return articles;
+          return publication;
       }
       
        public static void main(String[] args) {

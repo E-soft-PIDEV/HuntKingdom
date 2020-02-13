@@ -28,6 +28,13 @@ public class PublicationForum {
         this.theme = theme;
         this.Posted_in= Posted_in;
     }
+    public PublicationForum(  String titre, String contenu, String theme) {
+        
+        this.titre = titre;
+        this.contenu = contenu;
+        this.theme = theme;
+        
+    }
 
     public PublicationForum() {
     }
